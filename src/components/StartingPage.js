@@ -8,14 +8,14 @@ class StartingPage extends Component {
     return (
       <main className="page-content">
         <div className="page-content__title">
-          <h1 className="page-content__title--website-title">Chat app</h1>
+          <h1 className="title website-title">Chat app</h1>
         </div>
         <div className="page-content__nav-menu">
           <div className="nav-menu">
-            <Link className="btn-large waves-effect waves-light" to="/login">
+            <Link className="btn-large waves-effect waves-light" to="/signin">
               Войти
             </Link>
-            <Link className="btn-large waves-effect waves-light" to="/signin">
+            <Link className="btn-large waves-effect waves-light" to="/signup">
               Зарегестрироваться
             </Link>
           </div>

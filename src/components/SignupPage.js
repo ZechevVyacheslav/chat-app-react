@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 
-import '../styles/SigninPage.less';
+import '../styles/SignupPage.less'
 
-class LoginPage extends Component {
+class SigninPage extends Component {
   render() {
     return (
       <main className="page-content">
         <div className="page-content__title">
-          <h1 className="title form-title">Авторизация</h1>
+          <h1 className="title form-title">Регистрация</h1>
         </div>
         <div className="page-content__reg-field">
           <div className="row">
             <form className="col s12">
+              <div className="row">
+                <div className="input-field col s12">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    className="validate"
+                  ></input>
+                  <label htmlFor="email">Email</label>
+                </div>
+              </div>
               <div className="row">
                 <div className="input-field col s12">
                   <input
@@ -42,7 +53,10 @@ class LoginPage extends Component {
                   </button>
                 </div>
                 <div className="input-field col s6 button-group__button-section">
-                  <Link to='/' className="btn waves-effect waves-light button-section__return">
+                  <Link
+                    to="/"
+                    className="btn waves-effect waves-light button-section__return"
+                  >
                     Вернуться на главную
                   </Link>
                 </div>
@@ -55,4 +69,4 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+export default SigninPage;

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import StartingPage from './StartingPage';
-import LoginPage from './LoginPage';
 import SigninPage from './SigninPage';
+import SignupPage from './SignupPage';
 
 class App extends Component {
   render() {
@@ -12,11 +12,11 @@ class App extends Component {
         <Route path="/" exact>
           <StartingPage />
         </Route>
-        <Route path="/login" exact>
-          <LoginPage />
-        </Route>
         <Route path="/signin" exact>
           <SigninPage />
+        </Route>
+        <Route path="/signup" exact>
+          <SignupPage />
         </Route>
       </Switch>
     );
