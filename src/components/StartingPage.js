@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 import '../styles/StartingPage.less';
 
-class App extends Component {
+class StartingPage extends Component {
   render() {
     return (
       <main className="page-content">
@@ -11,12 +12,12 @@ class App extends Component {
         </div>
         <div className="page-content__nav-menu">
           <div className="nav-menu">
-            <a className="btn-large waves-effect waves-light" href="/login">
+            <Link className="btn-large waves-effect waves-light" to="/login">
               Войти
-            </a>
-            <a className="btn-large waves-effect waves-light" href="/register">
+            </Link>
+            <Link className="btn-large waves-effect waves-light" to="/signin">
               Зарегестрироваться
-            </a>
+            </Link>
           </div>
         </div>
       </main>
@@ -24,4 +25,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default StartingPage;

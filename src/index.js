@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StartingPage from './components/StartingPage';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import App from './components/App';
 
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import '../node_modules/materialize-css/dist/js/materialize.min.js';
 
-ReactDOM.render(<StartingPage />, document.getElementById('root'));
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById('root')
+);
