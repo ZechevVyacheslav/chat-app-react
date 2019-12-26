@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import StartingPage from './StartingPage';
-import SigninPage from './SigninPage';
-import SignupPage from './SignupPage';
+import StartingPage from './pages/Start/StartingPage';
+import SigninPage from './pages/Signin/SigninPage';
+import SignupPage from './pages/Signup/SignupPage';
 
 class App extends Component {
   render() {

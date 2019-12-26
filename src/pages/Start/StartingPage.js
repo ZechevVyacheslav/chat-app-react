@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 
-import '../styles/StartingPage.less';
+import './StartingPage.less';
 
 class StartingPage extends Component {
   render() {

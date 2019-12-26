@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 
-import '../styles/SigninPage.less';
+import './SigninPage.less';
 
 class LoginPage extends Component {
   render() {
