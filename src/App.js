@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import StartingPage from './pages/Start/StartingPage';
 import SigninPage from './pages/Signin/SigninPage';
 import SignupPage from './pages/Signup/SignupPage';
+import RoomsPage from './pages/Rooms/RoomsPage';
 
 class App extends Component {
   render() {
@@ -17,6 +18,9 @@ class App extends Component {
         </Route>
         <Route path="/signup" exact>
           <SignupPage />
+        </Route>
+        <Route path="/rooms" exact>
+          <RoomsPage />
         </Route>
       </Switch>
     );
