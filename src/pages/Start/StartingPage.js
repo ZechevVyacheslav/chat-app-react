@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 
 import './StartingPage.less';
 
 class StartingPage extends Component {
+  componentDidMount() {
+    if (this.props.loggedIn) {
+      this.props.history.push('/rooms');
+    }
+  }
+
   render() {
     return (
       <main className="page-content">
@@ -25,4 +32,12 @@ class StartingPage extends Component {
   }
 }
 
-export default StartingPage;
+const mapStateToProps = state => {
+  const loggedIn = localStorage.getItem('isLoggedIn') || false;
+  const props = {
+    loggedIn
+  };
+  return props;
+};
+
+export default connect(mapStateToProps)(withRouter(StartingPage));

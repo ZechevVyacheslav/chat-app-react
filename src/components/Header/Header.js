@@ -1,9 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../actions/index';
 
 import './Header.less';
 
 const Header = props => {
+  const handleLogoutClick = () => {
+    const { logout } = props;
+    logout();
+  };
+
   return (
     <nav className="header__content">
       <div className="nav-wrapper">
@@ -12,13 +19,14 @@ const Header = props => {
         </Link>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           <li>
-            <Link to="#" className="waves-effect waves-light btn">
-              Создать новую комнату
-              <i className="material-icons right">add_box</i>
-            </Link>
+            {/* Button */}
           </li>
           <li>
-            <Link to="/" className="waves-effect waves-light btn">
+            <Link
+              to="/"
+              onClick={handleLogoutClick}
+              className="waves-effect waves-light btn"
+            >
               Выйти <i className="material-icons right">exit_to_app</i>
             </Link>
           </li>
@@ -28,4 +36,8 @@ const Header = props => {
   );
 };
 
-export default Header;
+const mapActionsToProps = {
+  logout: actions.logoutUser
+};
+
+export default connect(null, mapActionsToProps)(Header);

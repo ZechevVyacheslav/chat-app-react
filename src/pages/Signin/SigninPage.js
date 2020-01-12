@@ -1,13 +1,30 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions/index';
+import { withRouter } from 'react-router-dom';
 
 import SigninForm from '../../components/Forms/Signin/SigninForm';
 
 import './SigninPage.less';
 
 class SigninPage extends Component {
-  submit = values => {
-    console.log(values);
+  
+  handleSubmit = user => {
+    const { login } = this.props;
+    login(user);
   };
+
+  componentDidMount() {
+    if (this.props.loggedIn) {
+      this.props.history.push('/rooms');
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.loggedIn) {
+      this.props.history.push('/rooms');
+    }
+  }
 
   render() {
     return (
@@ -16,11 +33,27 @@ class SigninPage extends Component {
           <h1 className="title form-title">Авторизация</h1>
         </div>
         <div className="page-content__reg-field">
-          <SigninForm onSubmit={this.submit}/>
+          <SigninForm onSubmit={this.handleSubmit} />
         </div>
       </main>
     );
   }
 }
 
-export default SigninPage;
+const mapStateToProps = state => {
+  // const { user } = state;
+  const loggedIn = localStorage.getItem('isLoggedIn') || false;
+  const props = {
+    loggedIn
+  };
+  return props;
+};
+
+const mapActionsToProps = {
+  login: actions.loginUser
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withRouter(SigninPage));

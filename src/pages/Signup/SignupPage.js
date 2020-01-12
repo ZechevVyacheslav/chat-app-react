@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
-// import uuid from 'uuid/v4';
+import { withRouter } from 'react-router-dom';
 
 import SignupForm from '../../components/Forms/Signup/SignupForm';
 
@@ -12,6 +12,18 @@ class SignupPage extends Component {
     const { register } = this.props;
     register(user);
   };
+
+  componentDidMount() {
+    if (this.props.loggedIn) {
+      this.props.history.push('/rooms');
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.loggedIn) {
+      this.props.history.push('/rooms');
+    }
+  }
 
   render() {
     return (
@@ -27,8 +39,17 @@ class SignupPage extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const { user } = state;
+  const loggedIn = localStorage.getItem('isLoggedIn') || false;
+  const props = {
+    loggedIn
+  };
+  return props;
+};
+
 const mapActionsToProps = {
   register: actions.registerUser
 };
 
-export default connect(null, mapActionsToProps)(SignupPage);
+export default connect(mapStateToProps, mapActionsToProps)(withRouter(SignupPage));

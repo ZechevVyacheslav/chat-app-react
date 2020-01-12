@@ -5,7 +5,7 @@ import './SigninForm.less';
 
 const SigninForm = props => {
   const clearFormAfterSubmit = values => {
-    props.reset();
+    // props.reset();
     props.handleSubmit(values);
   };
 

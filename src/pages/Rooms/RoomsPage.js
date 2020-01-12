@@ -1,10 +1,60 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions/index';
+import { withRouter } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
+import CreateRoomDialog from '../../components/Dialogs/CreateRoom/CreateRoomDialog';
+import EditRoomDialog from '../../components/Dialogs/EditRoom/EditRoomDialog';
+import RoomsList from '../../components/RoomsList/RoomsList';
 import './RoomsPage.less';
 
 class RoomsPage extends Component {
+  state = {
+    isCreateRoomDialogOpen: false,
+    isEditRoomDialogOpen: false
+  };
+
+  handleCreationSubmit = room => {
+    this.handleCreateRoomDialogClose();
+    const { createRoom } = this.props;
+
+    const token = localStorage.getItem('token');
+    createRoom(room, token);
+  };
+
+  handleCreateRoomDialogOpen = () => {
+    this.setState({ isCreateRoomDialogOpen: true });
+  };
+
+  handleCreateRoomDialogClose = () => {
+    this.setState({ isCreateRoomDialogOpen: false });
+  };
+
+  handleEditRoomDialogOpen = () => {
+    this.setState({ isEditRoomDialogOpen: true });
+  };
+
+  handleEditRoomDialogClose = () => {
+    this.setState({ isEditRoomDialogOpen: false });
+  };
+
+  componentDidMount() {
+    if (!this.props.loggedIn) {
+      this.props.history.push('/');
+    }
+    const { getRooms } = this.props;
+    const token = localStorage.getItem('token');
+    getRooms(token);
+  }
+
   render() {
+    const { rooms } = this.props;
+    // const roomsList = this.props.loggedIn ? (
+    //   <RoomsList rooms={rooms || []} />
+    // ) : (
+    //   <h1>No rooms</h1>
+    // );
     return (
       <>
         <header>
@@ -12,44 +62,25 @@ class RoomsPage extends Component {
         </header>
         <main className="page-content">
           <div className="page-content__rooms-list">
-            <ul className="collection with-header">
-              <li className="collection-header center-align">
-                <h4>Комнаты</h4>
-              </li>
-              <li className="collection-item">
-                <div className="rooms-list__room">
-                  Комната 1
-                  <a href="#!" className="secondary-content">
-                    <i className="material-icons">delete</i>
-                  </a>
-                  <a href="#!" className="secondary-content">
-                    <i className="material-icons">edit</i>
-                  </a>
-                </div>
-              </li>
-              <li className="collection-item">
-                <div className="rooms-list__room">
-                  Комната 2
-                  <a href="#!" className="secondary-content">
-                    <i className="material-icons">delete</i>
-                  </a>
-                  <a href="#!" className="secondary-content">
-                    <i className="material-icons">edit</i>
-                  </a>
-                </div>
-              </li>
-              <li className="collection-item">
-                <div className="rooms-list__room">
-                  Комната 3
-                  <a href="#!" className="secondary-content">
-                    <i className="material-icons">delete</i>
-                  </a>
-                  <a href="#!" className="secondary-content">
-                    <i className="material-icons">edit</i>
-                  </a>
-                </div>
-              </li>
-            </ul>
+            <div className="create-room-section">
+              <button
+                className="waves-effect waves-light btn create-room-section__button"
+                onClick={this.handleCreateRoomDialogOpen}
+              >
+                Создать новую комнату
+                <i className="material-icons right">add_box</i>
+              </button>
+              <CreateRoomDialog
+                onSubmit={this.handleCreationSubmit}
+                isOpen={this.state.isCreateRoomDialogOpen}
+                handleClose={this.handleCreateRoomDialogClose}
+              />
+              <EditRoomDialog />
+            </div>
+            <RoomsList
+              rooms={rooms || []}
+              openEdition={this.handleEditRoomDialogOpen}
+            />
           </div>
         </main>
       </>
@@ -57,4 +88,22 @@ class RoomsPage extends Component {
   }
 }
 
-export default RoomsPage;
+const mapStateToProps = state => {
+  const loggedIn = localStorage.getItem('isLoggedIn') || false;
+  const { rooms } = state.rooms;
+  const props = {
+    loggedIn,
+    rooms
+  };
+  return props;
+};
+
+const mapActionsToProps = {
+  createRoom: actions.createRoom,
+  getRooms: actions.getRooms
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withRouter(RoomsPage));
