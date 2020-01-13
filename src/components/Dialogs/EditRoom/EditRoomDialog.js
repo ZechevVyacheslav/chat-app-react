@@ -17,17 +17,9 @@ import './EditRoomDialog.less';
 const renderTextField = ({
   input,
   label,
-  defValue,
   meta: { touched, error },
   ...custom
-}) => (
-  <TextField
-    autoFocus
-    label={label}
-    {...input}
-    {...custom}
-  />
-);
+}) => <TextField autoFocus label={label} {...input} {...custom} />;
 
 const EditRoomDialog = props => {
   const { roomToEdit, isEditionDialogOpen, closeEditionDialog } = props;
@@ -75,16 +67,17 @@ const EditRoomDialog = props => {
   );
 };
 
-
-const selector = formValueSelector('editRoom') 
+const selector = formValueSelector('editRoom');
 
 const mapStateToProps = state => {
   const { roomToEdit, isEditionDialogOpen } = state.dialogs;
-  const title = selector(state, 'title')
+  const title = selector(state, 'title');
+  const initialTitle = roomToEdit.title;
   const props = {
     roomToEdit,
     isEditionDialogOpen,
-    title
+    title,
+    initialValues: { title: initialTitle }
   };
   return props;
 };
@@ -94,11 +87,5 @@ const mapActionsToProps = {
   updateRoom: actions.updateRoom
 };
 
-const connectedComponent = connect(
-  mapStateToProps,
-  mapActionsToProps
-)(EditRoomDialog);
-
-export default reduxForm({ form: 'editRoom'})(
-  connectedComponent
-);
+const form = reduxForm({ form: 'editRoom', enableReinitialize: true })(EditRoomDialog);
+export default connect(mapStateToProps, mapActionsToProps)(form)
