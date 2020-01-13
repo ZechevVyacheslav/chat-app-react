@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
 
@@ -11,6 +11,15 @@ const Header = props => {
     logout();
   };
 
+  const returnButton = /rooms\/\d{2}\/chat/.test(props.location.pathname) ? (
+    <Link to="/rooms" className="waves-effect waves-light btn">
+      Вернуться на главную{' '}
+      <i className="material-icons right">keyboard_backspace</i>
+    </Link>
+  ) : null;
+
+  // console.log(props.location.pathname);
+
   return (
     <nav className="header__content">
       <div className="nav-wrapper">
@@ -18,9 +27,7 @@ const Header = props => {
           Chat app
         </Link>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
-          <li>
-            {/* Button */}
-          </li>
+          <li>{returnButton}</li>
           <li>
             <Link
               to="/"
@@ -40,4 +47,4 @@ const mapActionsToProps = {
   logout: actions.logoutUser
 };
 
-export default connect(null, mapActionsToProps)(Header);
+export default connect(null, mapActionsToProps)(withRouter(Header));

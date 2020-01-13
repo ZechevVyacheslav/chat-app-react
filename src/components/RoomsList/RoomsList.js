@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
+import { Link } from 'react-router-dom';
 
 const RoomsList = props => {
   const openEdition = room => () => {
@@ -35,9 +36,9 @@ const RoomsList = props => {
           >
             <i className="material-icons">edit</i>
           </a>
-          <a href="#!" className="secondary-content">
+          <Link to={`/rooms/${room.id}/chat`} className="secondary-content">
             <i className="material-icons">visibility</i>
-          </a>
+          </Link>
         </div>
       </li>
     );

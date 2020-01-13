@@ -50,11 +50,6 @@ class RoomsPage extends Component {
 
   render() {
     const { rooms } = this.props;
-    // const roomsList = this.props.loggedIn ? (
-    //   <RoomsList rooms={rooms || []} />
-    // ) : (
-    //   <h1>No rooms</h1>
-    // );
     return (
       <>
         <header>

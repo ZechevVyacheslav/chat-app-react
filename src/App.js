@@ -5,6 +5,7 @@ import StartingPage from './pages/Start/StartingPage';
 import SigninPage from './pages/Signin/SigninPage';
 import SignupPage from './pages/Signup/SignupPage';
 import RoomsPage from './pages/Rooms/RoomsPage';
+import ChatPage from './pages/Chat/ChatPage';
 
 class App extends Component {
   render() {
@@ -18,6 +19,9 @@ class App extends Component {
         </Route>
         <Route path="/signup" exact>
           <SignupPage />
+        </Route>
+        <Route path="/rooms/:id">
+          <ChatPage />
         </Route>
         <Route path="/rooms" exact>
           <RoomsPage />
