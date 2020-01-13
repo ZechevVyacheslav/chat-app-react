@@ -28,6 +28,11 @@ const rooms = handleActions(
     [actions.getRoomsSuccess](state, { payload: { rooms } }) {
       return { ...state, rooms };
     },
+    [actions.deleteRoomSuccess](state, { payload: { deletedRoomId } }) {
+      const { rooms } = state;
+      const filteredRooms = rooms.filter(room => room.id !== deletedRoomId);
+      return { ...state, rooms: filteredRooms };
+    },
     [actions.logoutUser](state) {
       return { ...state, rooms: null };
     }
