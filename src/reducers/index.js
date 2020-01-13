@@ -28,6 +28,16 @@ const rooms = handleActions(
     [actions.getRoomsSuccess](state, { payload: { rooms } }) {
       return { ...state, rooms };
     },
+    [actions.createRoomSuccess](state, { payload: { room } }) {
+      const updatedRooms = [...state.rooms, room];
+      return { ...state, rooms: updatedRooms };
+    },
+    [actions.updateRoomSuccess](state, { payload: { updatedRoom } }) {
+      const updatedRooms = state.rooms.map(room =>
+        room.id === updatedRoom.id ? updatedRoom : room
+      );
+      return { ...state, rooms: updatedRooms };
+    },
     [actions.deleteRoomSuccess](state, { payload: { deletedRoomId } }) {
       const { rooms } = state;
       const filteredRooms = rooms.filter(room => room.id !== deletedRoomId);

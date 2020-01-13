@@ -12,7 +12,11 @@ const RoomsList = props => {
     props.deleteRoom(roomId, token);
   };
 
-  const roomsTitles = props.rooms.map(room => {
+  const sortedRoomsList = props.rooms.sort((a, b) => {
+    return b.id - a.id;
+  });
+
+  const roomsTitles = sortedRoomsList.map(room => {
     return (
       <li key={room.id} className="collection-item">
         <div className="rooms-list__room">

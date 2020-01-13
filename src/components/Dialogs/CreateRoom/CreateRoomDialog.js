@@ -23,7 +23,6 @@ const CreateRoomDialog = props => {
   const { isOpen, handleClose, handleSubmit } = props;
 
   const clearFormAfterSubmit = values => {
-    console.log(values);
     handleSubmit(values);
     props.reset();
   };

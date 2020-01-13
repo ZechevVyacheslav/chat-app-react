@@ -96,7 +96,7 @@ export const createRoom = (room, token) => dispatch => {
       return response.data;
     })
     .then(data => {
-      // dispatch(registerUserSuccess({ user: data.user, token: data.token }));
+      dispatch(createRoomSuccess({ room: data.room }));
     })
     .catch(error => {
       console.log(error);
@@ -122,7 +122,8 @@ export const updateRoom = (title, roomId, token) => dispatch => {
       return response.data;
     })
     .then(data => {
-      // dispatch(registerUserSuccess({ user: data.user, token: data.token }));
+      console.log(data);
+      dispatch(updateRoomSuccess({ updatedRoom: data.room }));
     })
     .catch(error => {
       console.log(error);
