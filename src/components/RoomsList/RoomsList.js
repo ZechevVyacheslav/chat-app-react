@@ -13,6 +13,11 @@ const RoomsList = props => {
     props.deleteRoom(roomId, token);
   };
 
+  const handleRoomOpening = roomId => () => {
+    props.openChat({ chatId: roomId });
+    localStorage.setItem('chatId', roomId);
+  };
+
   const sortedRoomsList = props.rooms.sort((a, b) => {
     return b.id - a.id;
   });
@@ -36,7 +41,11 @@ const RoomsList = props => {
           >
             <i className="material-icons">edit</i>
           </a>
-          <Link to={`/rooms/${room.id}/chat`} className="secondary-content">
+          <Link
+            to={`/rooms/${room.id}/chat`}
+            onClick={handleRoomOpening(room.id)}
+            className="secondary-content"
+          >
             <i className="material-icons">visibility</i>
           </Link>
         </div>
@@ -65,6 +74,7 @@ const RoomsList = props => {
 
 const mapActionsToProps = {
   openEditionDialog: actions.openEditionDialog,
+  openChat: actions.openChat,
   deleteRoom: actions.deleteRoom
 };
 

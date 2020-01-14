@@ -62,4 +62,30 @@ const dialogs = handleActions(
   { isEditionDialogOpen: false, roomToEdit: {} }
 );
 
-export default combineReducers({ form: formReducer, user, rooms, dialogs });
+const chat = handleActions(
+  {
+    [actions.openChat](state, { payload: { chatId } }) {
+      return { ...state, chatId };
+    },
+    [actions.getRoomMessagesSuccess](state, { payload: { messages } }) {
+      const [firstMessage, ...rest] = messages;
+      const roomId = firstMessage.room.id;
+      return { ...state, chatId: roomId, chatData: messages };
+    },
+    [actions.sendRoomMessageSuccess](state, { payload: { message } }) {
+      return { ...state, chatData: [...state.chatData, message] };
+    },
+    [actions.closeChat](state) {
+      return { ...state, chatId: null, chatData: null };
+    }
+  },
+  { chatId: null, chatData: null }
+);
+
+export default combineReducers({
+  form: formReducer,
+  user,
+  rooms,
+  dialogs,
+  chat
+});

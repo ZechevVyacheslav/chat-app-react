@@ -2,22 +2,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
 import { withRouter } from 'react-router-dom';
-import { TextField } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 
 import Header from '../../components/Header/Header';
+import MessageInput from '../../components/Forms/Message/MessageInput';
 import './ChatPage.less';
 
 class ChatPage extends Component {
+
   componentDidMount() {
     if (!this.props.loggedIn) {
       this.props.history.push('/');
     }
-    //   const { getRooms } = this.props;
-    //   const token = localStorage.getItem('token');
-    //   getRooms(token);
+    const { getRoomMessages, chatId } = this.props;
+    const token = localStorage.getItem('token');
+    getRoomMessages(chatId, token);
   }
 
   render() {
+    const { chatData } = this.props;
+    const messages = !chatData
+      ? null
+      : chatData.map(message => {
+          return (
+            <div key={message.id} className="chat_signle-message">
+              <div className="chat_signle-message__avatar">
+                <Avatar className="user-avatar">U</Avatar>
+              </div>
+              <div className="chat_signle-message__username">
+                {message.user.username}
+              </div>
+              <div className="chat_signle-message__text">{message.text}</div>
+            </div>
+          );
+        });
+
     return (
       <>
         <header>
@@ -35,12 +54,9 @@ class ChatPage extends Component {
                 <i className="material-icons right">person_add</i>
               </button>
             </div>
-            <div className="chat__messages-section"></div>
+            <div className="chat__messages-section">{messages}</div>
             <div className="chat__entering-section">
-              <TextField
-                id="outlined-basic"
-                label="Начните писать"
-              />
+              <MessageInput />
             </div>
           </div>
         </main>
@@ -51,14 +67,18 @@ class ChatPage extends Component {
 
 const mapStateToProps = state => {
   const loggedIn = localStorage.getItem('isLoggedIn') || false;
+  const chatId = state.chat.chatId || localStorage.getItem('chatId');
+  const chatData = state.chat.chatData;
   const props = {
-    loggedIn
+    loggedIn,
+    chatId,
+    chatData
   };
   return props;
 };
 
 const mapActionsToProps = {
-  // createRoom: actions.createRoom
+  getRoomMessages: actions.getRoomMessages
 };
 
 export default connect(

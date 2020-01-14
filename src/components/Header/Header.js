@@ -11,9 +11,18 @@ const Header = props => {
     logout();
   };
 
+  const handleChatClose = () => {
+    props.closeChat();
+    localStorage.removeItem('chatId');
+  };
+
   const returnButton = /rooms\/\d{2}\/chat/.test(props.location.pathname) ? (
-    <Link to="/rooms" className="waves-effect waves-light btn">
-      Вернуться на главную{' '}
+    <Link
+      to="/rooms"
+      onClick={handleChatClose}
+      className="waves-effect waves-light btn"
+    >
+      Вернуться на главную
       <i className="material-icons right">keyboard_backspace</i>
     </Link>
   ) : null;
@@ -44,7 +53,8 @@ const Header = props => {
 };
 
 const mapActionsToProps = {
-  logout: actions.logoutUser
+  logout: actions.logoutUser,
+  closeChat: actions.closeChat
 };
 
 export default connect(null, mapActionsToProps)(withRouter(Header));

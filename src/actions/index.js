@@ -27,8 +27,19 @@ export const deleteRoomRequest = createAction('ROOM_DELETE_REQUEST');
 export const deleteRoomSuccess = createAction('ROOM_DELETE_SUCCESS');
 export const deleteRoomFailure = createAction('ROOM_DELETE_FAILURE');
 
+export const getRoomMessagesRequest = createAction('ROOM_GET_MESSAGES_REQUEST');
+export const getRoomMessagesSuccess = createAction('ROOM_GET_MESSAGES_SUCCESS');
+export const getRoomMessagesFailure = createAction('ROOM_GET_MESSAGES_FAILURE');
+
+export const sendRoomMessageRequest = createAction('ROOM_SEND_MESSAGES_REQUEST');
+export const sendRoomMessageSuccess = createAction('ROOM_SEND_MESSAGES_SUCCESS');
+export const sendRoomMessageFailure = createAction('ROOM_SEND_MESSAGES_AILURE');
+
 export const openEditionDialog = createAction('OPEN_EDITION_DIALOG');
 export const closeEditionDialog = createAction('CLOSE_EDITION_DIALOG');
+
+export const openChat = createAction('OPEN_CHAT');
+export const closeChat = createAction('CLOSE_CHAT');
 
 export const registerUser = user => dispatch => {
   dispatch(registerUserRequest());
@@ -147,5 +158,47 @@ export const deleteRoom = (roomId, token) => dispatch => {
     .catch(error => {
       console.log(error);
       dispatch(deleteRoomFailure());
+    });
+};
+
+export const getRoomMessages = (roomId, token) => dispatch => {
+  dispatch(getRoomMessagesRequest());
+  axios
+    .get(`http://localhost:3000/rooms/${roomId}/chat`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      console.log(response);
+      return response.data;
+    })
+    .then(data => {
+      dispatch(getRoomMessagesSuccess({ messages: data.messages }));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(getRoomMessagesFailure());
+    });
+};
+
+export const sendRoomMessage = (roomId, text, token) => dispatch => {
+  dispatch(sendRoomMessageRequest());
+  axios
+    .post(
+      `http://localhost:3000/rooms/${roomId}/chat`,
+      { text },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    )
+    .then(response => {
+      console.log(response);
+      return response.data;
+    })
+    .then(data => {
+      dispatch(sendRoomMessageSuccess({ message: data.msg }));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(sendRoomMessageFailure());
     });
 };
