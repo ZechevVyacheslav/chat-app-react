@@ -57,9 +57,24 @@ const dialogs = handleActions(
     },
     [actions.closeEditionDialog](state) {
       return { ...state, isEditionDialogOpen: false, roomToEdit: {} };
+    },
+    [actions.openMessageEditionDialog](state, { payload: { message } }) {
+      return {
+        ...state,
+        isMessageEditionDialogOpen: true,
+        messageToEdit: message
+      };
+    },
+    [actions.closeMessageEditionDialog](state) {
+      return { ...state, isMessageEditionDialogOpen: false, messageToEdit: {} };
     }
   },
-  { isEditionDialogOpen: false, roomToEdit: {} }
+  {
+    isEditionDialogOpen: false,
+    roomToEdit: {},
+    isMessageEditionDialogOpen: false,
+    messageToEdit: {}
+  }
 );
 
 const chat = handleActions(
@@ -70,10 +85,23 @@ const chat = handleActions(
     [actions.getRoomMessagesSuccess](state, { payload: { messages } }) {
       const [firstMessage, ...rest] = messages;
       const roomId = firstMessage.room.id;
-      return { ...state, chatId: roomId, chatData: messages };
+      const sortedChatData = messages.sort((a, b) => a.id - b.id);
+      return { ...state, chatId: roomId, chatData: sortedChatData };
     },
     [actions.sendRoomMessageSuccess](state, { payload: { message } }) {
       return { ...state, chatData: [...state.chatData, message] };
+    },
+    [actions.updateRoomMessageSuccess](state, { payload: { updatedMessage } }) {
+      const updatedMessages = state.chatData.map(message => {
+        return message.id === updatedMessage.id ? updatedMessage : message;
+      });
+      return { ...state, chatData: updatedMessages };
+    },
+    [actions.deleteRoomMessageSuccess](state, { payload: { deletedMessage } }) {
+      const filteredMessages = state.chatData.filter(
+        message => message.id !== deletedMessage.id
+      );
+      return { ...state, chatData: filteredMessages };
     },
     [actions.closeChat](state) {
       return { ...state, chatId: null, chatData: null };

@@ -1,0 +1,30 @@
+.chat_signle-message {
+  display: grid;
+  grid-template-columns: 7% 1fr;
+  grid-template-rows: 1.2rem minmax(2rem, 1fr);
+  margin: 0.1rem 1rem;
+  padding: 0.2rem 0;
+  border: 1px solid black;
+}
+
+.chat_signle-message__avatar {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+  .user-avatar {
+    background-color: red !important;
+  }
+}
+
+.chat_signle-message__username {
+  padding-left: 0.4rem;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.chat_signle-message__text {
+  padding-left: 0.4rem;
+  padding-top: 0.4rem;
+}

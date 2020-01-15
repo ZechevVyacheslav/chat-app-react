@@ -44,7 +44,7 @@ const EditRoomDialog = props => {
       onClose={closeEditionDialog}
       aria-labelledby="form-dialog-title"
     >
-      <form onSubmit={clearFormAfterSubmit}>
+      <form autoComplete="off" onSubmit={clearFormAfterSubmit}>
         <DialogTitle id="form-dialog-title">Редактирование комнаты</DialogTitle>
         <DialogContent>
           <DialogContentText>Отредактируйте название комнаты</DialogContentText>

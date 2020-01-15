@@ -33,10 +33,20 @@ export const getRoomMessagesFailure = createAction('ROOM_GET_MESSAGES_FAILURE');
 
 export const sendRoomMessageRequest = createAction('ROOM_SEND_MESSAGES_REQUEST');
 export const sendRoomMessageSuccess = createAction('ROOM_SEND_MESSAGES_SUCCESS');
-export const sendRoomMessageFailure = createAction('ROOM_SEND_MESSAGES_AILURE');
+export const sendRoomMessageFailure = createAction('ROOM_SEND_MESSAGES_FAILURE');
+
+export const updateRoomMessageRequest = createAction('ROOM_UPDATE_MESSAGES_REQUEST');
+export const updateRoomMessageSuccess = createAction('ROOM_UPDATE_MESSAGES_SUCCESS');
+export const updateRoomMessageFailure = createAction('ROOM_UPDATE_MESSAGES_FAILURE');
+
+export const deleteRoomMessageRequest = createAction('ROOM_DELETE_MESSAGES_REQUEST');
+export const deleteRoomMessageSuccess = createAction('ROOM_DELETE_MESSAGES_SUCCESS');
+export const deleteRoomMessageFailure = createAction('ROOM_DELETE_MESSAGES_FAILURE');
 
 export const openEditionDialog = createAction('OPEN_EDITION_DIALOG');
 export const closeEditionDialog = createAction('CLOSE_EDITION_DIALOG');
+export const openMessageEditionDialog = createAction('OPEN_MESSAGE_EDITION_DIALOG');
+export const closeMessageEditionDialog = createAction('CLOSE_MESSAGE_EDITION_DIALOG');
 
 export const openChat = createAction('OPEN_CHAT');
 export const closeChat = createAction('CLOSE_CHAT');
@@ -200,5 +210,53 @@ export const sendRoomMessage = (roomId, text, token) => dispatch => {
     .catch(error => {
       console.log(error);
       dispatch(sendRoomMessageFailure());
+    });
+};
+
+export const updateRoomMessage = (roomId, messageId, text, token) => dispatch => {
+  dispatch(updateRoomMessageRequest());
+  axios
+    .put(
+      `http://localhost:3000/rooms/${roomId}/chat`,
+      {
+        messageId,
+        text
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    )
+    .then(response => {
+      console.log(response);
+      return response.data;
+    })
+    .then(data => {
+      dispatch(updateRoomMessageSuccess({ updatedMessage: data.msg }));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(updateRoomMessageFailure());
+    });
+};
+
+export const deleteRoomMessage = (roomId, messageId, token) => dispatch => {
+  dispatch(deleteRoomMessageRequest());
+  axios
+    .delete(
+      `http://localhost:3000/rooms/${roomId}/chat/${messageId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    )
+    .then(response => {
+      console.log(response);
+      return response.data;
+    })
+    .then(data => {
+      dispatch(deleteRoomMessageSuccess({ deletedMessage: data.msg }));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(deleteRoomMessageFailure());
     });
 };

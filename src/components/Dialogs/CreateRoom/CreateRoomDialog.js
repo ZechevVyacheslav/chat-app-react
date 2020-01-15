@@ -38,7 +38,7 @@ const CreateRoomDialog = props => {
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <form onSubmit={clearFormAfterSubmit}>
+      <form autoComplete="off" onSubmit={clearFormAfterSubmit}>
         <DialogTitle id="form-dialog-title">Создание комнаты</DialogTitle>
         <DialogContent>
           <DialogContentText>

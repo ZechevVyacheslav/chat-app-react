@@ -13,7 +13,6 @@ const renderTextField = ({
 
 const MessageInput = props => {
   const clearFormAfterSubmit = values => {
-    console.log(props.text);
     values.preventDefault();
     const { sendRoomMessage, chatId } = props;
     const token = localStorage.getItem('token');
