@@ -3,12 +3,29 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
 import { withRouter } from 'react-router-dom';
 
+import TabPanel from '../../components/Tabs/TabPanel/TabPanel';
+import LinkTab from '../../components/Tabs/LinkTab/LinkTab';
+import { AppBar, Tabs, Tab } from '@material-ui/core';
 import Header from '../../components/Header/Header';
 import MessageSection from '../../components/Message/MessageSection/MessageSection';
 import EditMessageDialog from '../../components/Dialogs/EditMessage/EditMessageDialog';
 import './ChatPage.less';
 
 class ChatPage extends Component {
+  state = {
+    tabNumber: 0
+  };
+
+  a11yProps = index => {
+    return {
+      id: `nav-tab-${index}`,
+      'aria-controls': `nav-tabpanel-${index}`
+    };
+  };
+
+  handleTabSwitch = (event, number) => {
+    this.setState({ tabNumber: number });
+  };
 
   componentDidMount() {
     if (!this.props.loggedIn) {
@@ -20,8 +37,6 @@ class ChatPage extends Component {
   }
 
   render() {
-
-
     return (
       <>
         <header>
@@ -30,17 +45,50 @@ class ChatPage extends Component {
         <main className="page-content">
           <div className="chat">
             <div className="chat__header-section">
-              <h3>Чатик</h3>
+              {/* <h3>Чатик</h3>
               <button
                 className="waves-effect waves-light btn"
                 onClick={this.handleCreateRoomDialogOpen}
               >
                 Пригласить пользователей
                 <i className="material-icons right">person_add</i>
-              </button>
+              </button> */}
+              <AppBar position="static">
+                <Tabs
+                  variant="fullWidth"
+                  value={this.state.tabNumber}
+                  onChange={this.handleTabSwitch}
+                  aria-label="nav tabs example"
+                >
+                  <LinkTab
+                    label="Сообщения"
+                    href="/messages"
+                    {...this.a11yProps(0)}
+                  />
+                  <LinkTab
+                    label="Файлы"
+                    href="/files"
+                    {...this.a11yProps(1)}
+                  />
+                  <LinkTab
+                    label="Участники"
+                    href="/members"
+                    {...this.a11yProps(2)}
+                  />
+                </Tabs>
+              </AppBar>
             </div>
             <div className="chat__content-section">
-              <MessageSection />
+              {/* <MessageSection /> */}
+              <TabPanel value={this.state.tabNumber} index={0}>
+                <MessageSection />
+              </TabPanel>
+              <TabPanel value={this.state.tabNumber} index={1}>
+                Page Two
+              </TabPanel>
+              <TabPanel value={this.state.tabNumber} index={2}>
+                Page Three
+              </TabPanel>
             </div>
           </div>
           <EditMessageDialog />
