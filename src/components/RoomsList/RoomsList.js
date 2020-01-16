@@ -4,16 +4,18 @@ import * as actions from '../../actions/index';
 import { Link } from 'react-router-dom';
 
 const RoomsList = props => {
-  const openEdition = room => () => {
+  const openEdition = room => (event) => {
+    event.preventDefault()
     props.openEditionDialog({ room });
   };
 
-  const handleRoomDeletion = roomId => () => {
+  const handleRoomDeletion = roomId => (event) => {
+    event.preventDefault()
     const token = localStorage.getItem('token');
     props.deleteRoom(roomId, token);
   };
 
-  const handleRoomOpening = roomId => () => {
+  const handleRoomOpening = roomId => (event) => {
     props.openChat({ chatId: roomId });
     localStorage.setItem('chatId', roomId);
   };

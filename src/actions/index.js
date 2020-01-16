@@ -182,7 +182,7 @@ export const getRoomMessages = (roomId, token) => dispatch => {
       return response.data;
     })
     .then(data => {
-      dispatch(getRoomMessagesSuccess({ messages: data.messages }));
+      dispatch(getRoomMessagesSuccess({ messages: data.messages, roomId }));
     })
     .catch(error => {
       console.log(error);

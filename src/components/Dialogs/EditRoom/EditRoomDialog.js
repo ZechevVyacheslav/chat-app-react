@@ -25,6 +25,7 @@ const EditRoomDialog = props => {
   const { roomToEdit, isEditionDialogOpen, closeEditionDialog } = props;
 
   const clearFormAfterSubmit = values => {
+    values.preventDefault();
     const { updateRoom, title } = props;
     const token = localStorage.getItem('token');
 
@@ -87,5 +88,7 @@ const mapActionsToProps = {
   updateRoom: actions.updateRoom
 };
 
-const form = reduxForm({ form: 'editRoom', enableReinitialize: true })(EditRoomDialog);
-export default connect(mapStateToProps, mapActionsToProps)(form)
+const form = reduxForm({ form: 'editRoom', enableReinitialize: true })(
+  EditRoomDialog
+);
+export default connect(mapStateToProps, mapActionsToProps)(form);

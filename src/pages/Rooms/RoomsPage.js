@@ -49,7 +49,8 @@ class RoomsPage extends Component {
   }
 
   render() {
-    const { rooms } = this.props;
+    const { rooms, isEditionDialogOpen } = this.props;
+    const editRoomDialog = isEditionDialogOpen ? <EditRoomDialog /> : null;
     return (
       <>
         <header>
@@ -70,7 +71,7 @@ class RoomsPage extends Component {
                 isOpen={this.state.isCreateRoomDialogOpen}
                 handleClose={this.handleCreateRoomDialogClose}
               />
-              <EditRoomDialog />
+              {editRoomDialog}
             </div>
             <RoomsList
               rooms={rooms || []}
@@ -86,9 +87,11 @@ class RoomsPage extends Component {
 const mapStateToProps = state => {
   const loggedIn = localStorage.getItem('isLoggedIn') || false;
   const { rooms } = state.rooms;
+  const { isEditionDialogOpen } = state.dialogs;
   const props = {
     loggedIn,
-    rooms
+    rooms,
+    isEditionDialogOpen,
   };
   return props;
 };

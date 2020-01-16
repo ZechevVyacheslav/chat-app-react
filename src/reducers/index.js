@@ -82,9 +82,12 @@ const chat = handleActions(
     [actions.openChat](state, { payload: { chatId } }) {
       return { ...state, chatId };
     },
-    [actions.getRoomMessagesSuccess](state, { payload: { messages } }) {
-      const [firstMessage, ...rest] = messages;
-      const roomId = firstMessage.room.id;
+    [actions.getRoomMessagesSuccess](state, { payload: { roomId, messages } }) {
+      if (messages.length === 0) {
+        return { ...state, chatId: roomId, chatData: messages };
+      }
+      // const [firstMessage, ...rest] = messages;
+      // const roomId = firstMessage.room.id;
       const sortedChatData = messages.sort((a, b) => a.id - b.id);
       return { ...state, chatId: roomId, chatData: sortedChatData };
     },
