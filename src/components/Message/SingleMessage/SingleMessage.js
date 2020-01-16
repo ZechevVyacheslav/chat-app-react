@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Menu, MenuItem } from '@material-ui/core';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/index';
+import * as actions from '../../../actions/index';
 
 import './SingleMessage.less';
 

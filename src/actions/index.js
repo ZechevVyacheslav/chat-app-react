@@ -218,27 +218,26 @@ export const getRoomMessages = (roomId, token) => dispatch => {
 
 export const sendRoomMessage = (roomId, text, token) => dispatch => {
   dispatch(sendRoomMessageRequest());
-  sleep(1000).then(() => {
-    axios
-      .post(
-        `http://localhost:3000/rooms/${roomId}/chat`,
-        { text },
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      )
-      .then(response => {
-        console.log(response);
-        return response.data;
-      })
-      .then(data => {
-        dispatch(sendRoomMessageSuccess({ message: data.msg }));
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(sendRoomMessageFailure());
-      });
-  });
+
+  axios
+    .post(
+      `http://localhost:3000/rooms/${roomId}/chat`,
+      { text },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    )
+    .then(response => {
+      console.log(response);
+      return response.data;
+    })
+    .then(data => {
+      dispatch(sendRoomMessageSuccess({ message: data.msg }));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(sendRoomMessageFailure());
+    });
 };
 
 export const updateRoomMessage = (
