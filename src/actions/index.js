@@ -61,6 +61,10 @@ export const deleteRoomMessageFailure = createAction(
   'ROOM_DELETE_MESSAGES_FAILURE'
 );
 
+export const duplicateRoomRequest = createAction('DUPLICATE_ROOM_REQUEST');
+export const duplicateRoomSuccess = createAction('DUPLICATE_ROOM_SUCCESS');
+export const duplicateRoomFailure = createAction('DUPLICATE_ROOM_FAILURE');
+
 export const openEditionDialog = createAction('OPEN_EDITION_DIALOG');
 export const closeEditionDialog = createAction('CLOSE_EDITION_DIALOG');
 export const openMessageEditionDialog = createAction(
@@ -287,5 +291,24 @@ export const deleteRoomMessage = (roomId, messageId, token) => dispatch => {
     .catch(error => {
       console.log(error);
       dispatch(deleteRoomMessageFailure());
+    });
+};
+
+export const duplicateRoom = (roomId, token) => dispatch => {
+  dispatch(duplicateRoomRequest());
+  axios
+    .post(`http://localhost:3000/rooms/${roomId}/duplicate`, null, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      console.log(response);
+      return response.data;
+    })
+    .then(data => {
+      dispatch(duplicateRoomSuccess({ roomCopy: data.room, messagesCopy: data.messages }));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(duplicateRoomFailure());
     });
 };

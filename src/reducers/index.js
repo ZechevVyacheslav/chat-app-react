@@ -43,6 +43,10 @@ const rooms = handleActions(
       const filteredRooms = rooms.filter(room => room.id !== deletedRoomId);
       return { ...state, rooms: filteredRooms };
     },
+    [actions.duplicateRoomSuccess](state, { payload: { roomCopy } }) {
+      const updatedRooms = [...state.rooms, roomCopy];
+      return { ...state, rooms: updatedRooms };
+    },
     [actions.logoutUser](state) {
       return { ...state, rooms: null };
     }
@@ -105,6 +109,10 @@ const chat = handleActions(
         message => message.id !== deletedMessage.id
       );
       return { ...state, chatData: filteredMessages };
+    },
+    [actions.duplicateRoomSuccess](state, { payload: { messagesCopy } }) {
+      const updatedMessages = [...state.chatData, ...messagesCopy];
+      return { ...state, chatData: updatedMessages };
     },
     [actions.closeChat](state) {
       return { ...state, chatId: null, chatData: null };
