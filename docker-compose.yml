@@ -1,0 +1,12 @@
+version: '3'
+services:
+  server:
+    image: glimer/chatapp
+    ports:
+      - '3000:3000'
+  client:
+    image: glimer/chatapp-client
+    depends_on:
+      - server
+    ports:
+      - '8080:8080'

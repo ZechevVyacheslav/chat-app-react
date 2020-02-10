@@ -87,6 +87,8 @@ export const registerUser = user => dispatch => {
     .post('http://localhost:3000/user/register', user)
     .then(response => {
       console.log(response);
+      localStorage.setItem('token', response.data.user.token);
+      localStorage.setItem('isLoggedIn', true);
       return response.data;
     })
     .then(data => {
@@ -305,7 +307,12 @@ export const duplicateRoom = (roomId, token) => dispatch => {
       return response.data;
     })
     .then(data => {
-      dispatch(duplicateRoomSuccess({ roomCopy: data.room, messagesCopy: data.messages }));
+      dispatch(
+        duplicateRoomSuccess({
+          roomCopy: data.room,
+          messagesCopy: data.messages
+        })
+      );
     })
     .catch(error => {
       console.log(error);

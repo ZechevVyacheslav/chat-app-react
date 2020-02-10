@@ -52,4 +52,7 @@ const mapActionsToProps = {
   register: actions.registerUser
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(withRouter(SignupPage));
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withRouter(SignupPage));
